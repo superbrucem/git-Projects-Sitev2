@@ -4,6 +4,7 @@ import { ProjectWithTechnologies } from "@shared/schema";
 import ProjectCard from "@/components/project/ProjectCard";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+// import bruceProfile from "../assets/images/bruce-profile.png";
 
 const Home = () => {
   const { data: featuredProjects, isLoading } = useQuery<ProjectWithTechnologies[]>({
@@ -52,7 +53,7 @@ const Home = () => {
             <div className="absolute -inset-1 bg-gradient-to-r from-primary to-purple-600 rounded-lg blur opacity-30"></div>
             <div className="relative aspect-square overflow-hidden rounded-lg bg-card border border-gray-200 dark:border-gray-800 shadow-md">
               <img 
-                src="/images/bruce-profile.png" 
+                src="/images/bruce-profile.png"
                 alt="Bruce Maber" 
                 className="object-cover w-full h-full"
               />
