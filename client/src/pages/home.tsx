@@ -52,7 +52,7 @@ const Home = () => {
             <div className="absolute -inset-1 bg-gradient-to-r from-primary to-purple-600 rounded-lg blur opacity-30"></div>
             <div className="relative aspect-square overflow-hidden rounded-lg bg-card border border-gray-200 dark:border-gray-800 shadow-md">
               <img 
-                src="./images/bruce-profile.png" 
+                src="/images/bruce-profile.png" 
                 alt="Bruce Maber" 
                 className="object-cover w-full h-full"
               />
