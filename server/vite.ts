@@ -80,6 +80,7 @@ export function serveStatic(app: Express) {
     );
   }
 
+  // Serve both the built files and the public directory
   app.use(express.static(distPath));
   app.use(express.static(publicPath));
 
