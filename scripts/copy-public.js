@@ -1,21 +1,25 @@
-const fs = require('fs');
-const path = require('path');
+import { copyFileSync, readdirSync, mkdirSync, existsSync } from 'fs';
+import { join, resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-const sourceDir = path.resolve(__dirname, '..', 'public');
-const targetDir = path.resolve(__dirname, '..', 'dist', 'public');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const sourceDir = resolve(__dirname, '..', 'public');
+const targetDir = resolve(__dirname, '..', 'dist', 'public');
 
 try {
   // Create target directory if it doesn't exist
-  if (!fs.existsSync(targetDir)) {
-    fs.mkdirSync(targetDir, { recursive: true });
+  if (!existsSync(targetDir)) {
+    mkdirSync(targetDir, { recursive: true });
   }
 
   // Copy all files from public to dist/public
-  const files = fs.readdirSync(sourceDir);
+  const files = readdirSync(sourceDir);
   files.forEach(file => {
-    const sourcePath = path.join(sourceDir, file);
-    const targetPath = path.join(targetDir, file);
-    fs.copyFileSync(sourcePath, targetPath);
+    const sourcePath = join(sourceDir, file);
+    const targetPath = join(targetDir, file);
+    copyFileSync(sourcePath, targetPath);
   });
 
   console.log('Public files copied successfully');
@@ -23,3 +27,4 @@ try {
   console.error('Error copying files:', error);
   process.exit(1);
 }
+
