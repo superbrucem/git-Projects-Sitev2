@@ -4,7 +4,6 @@ import { ProjectWithTechnologies } from "@shared/schema";
 import ProjectCard from "@/components/project/ProjectCard";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-// import bruceProfile from "../assets/images/bruce-profile.png";
 
 const Home = () => {
   const { data: featuredProjects, isLoading } = useQuery<ProjectWithTechnologies[]>({

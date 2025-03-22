@@ -15,8 +15,8 @@ const Footer = () => {
             </p>
           </div>
           <div className="flex flex-wrap gap-4">
-            <a href="mailto:bruce@example.com" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
-              <i className="fas fa-envelope mr-1"></i> bruce@example.com
+            <a href="mailto:brucemaber@hotmail.com" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
+              <i className="fas fa-envelope mr-1"></i> brucemaber@hotmail.com
             </a>
             <a href="https://github.com/brucemaber" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
               <i className="fab fa-github mr-1"></i> GitHub
