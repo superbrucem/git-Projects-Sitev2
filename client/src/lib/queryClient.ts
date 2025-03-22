@@ -24,12 +24,20 @@ export async function apiRequest(
 }
 
 type UnauthorizedBehavior = "returnNull" | "throw";
+const getApiUrl = (path: string) => {
+  const isProd = process.env.NODE_ENV === 'production';
+  return isProd ? `/.netlify/functions/api${path}` : path;
+};
+
 export const getQueryFn: <T>(options: {
   on401: UnauthorizedBehavior;
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const res = await fetch(queryKey[0] as string, {
+    const path = queryKey[0] as string;
+    const apiUrl = getApiUrl(path);
+    
+    const res = await fetch(apiUrl, {
       credentials: "include",
     });
 
