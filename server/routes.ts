@@ -16,27 +16,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Get all projects
   app.get(`${apiPrefix}/projects`, async (req, res) => {
-    console.log('[DEBUG] Attempting to fetch projects');
+    console.log('[DEBUG] Projects endpoint called', {
+      method: req.method,
+      url: req.url,
+      headers: req.headers,
+      timestamp: new Date().toISOString()
+    });
+
     try {
+      console.log('[DEBUG] Calling storage.getAllProjects()');
       const projects = await storage.getAllProjects();
-      console.log('[DEBUG] Projects fetched successfully:', projects);
+      
+      console.log('[DEBUG] Projects response:', {
+        count: projects?.length ?? 0,
+        projectIds: projects?.map(p => p.id) ?? [],
+        timestamp: new Date().toISOString()
+      });
+
+      if (!projects || projects.length === 0) {
+        console.log('[DEBUG] No projects found in response');
+        return res.json([]);
+      }
+
       res.json(projects);
     } catch (error) {
-      // Log the error with more details
       console.error('[DEBUG] Project fetch error:', {
+        name: error.name,
         message: error.message,
         stack: error.stack,
         timestamp: new Date().toISOString()
       });
       
-      // Send a proper error response
       res.status(500).json({ 
         error: "Failed to fetch projects",
         details: process.env.NODE_ENV === 'development' ? error.message : undefined
       });
-      
-      // Don't throw the error again since we've handled it
-      // Remove or comment out: throw err;
     }
   });
 

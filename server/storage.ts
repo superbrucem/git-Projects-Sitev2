@@ -46,8 +46,9 @@ export class MemStorage implements IStorage {
     this.currentProjectId = 1;
     this.currentTechnologyId = 1;
     
-    // Initialize with some demo projects
+    console.log('[DEBUG] MemStorage initialized');
     this.initDemoProjects();
+    console.log('[DEBUG] Demo projects count:', this.projects.size);
   }
 
   async getUser(id: number): Promise<User | undefined> {
@@ -69,14 +70,26 @@ export class MemStorage implements IStorage {
 
   async getAllProjects(): Promise<ProjectWithTechnologies[]> {
     console.log('[DEBUG] Getting all projects');
+    console.log('[DEBUG] Current projects in storage:', {
+      size: this.projects.size,
+      keys: Array.from(this.projects.keys()),
+      projects: Array.from(this.projects.values())
+    });
+    
     try {
       const projectsArray = Array.from(this.projects.values());
-      return Promise.all(
+      console.log('[DEBUG] Projects array length:', projectsArray.length);
+      
+      const projectsWithTech = await Promise.all(
         projectsArray.map(async (project) => {
           const technologies = await this.getTechnologiesForProject(project.id);
+          console.log('[DEBUG] Technologies for project', project.id, ':', technologies);
           return { ...project, technologies };
         })
       );
+      
+      console.log('[DEBUG] Final projects with technologies:', projectsWithTech);
+      return projectsWithTech;
     } catch (error) {
       console.error('[DEBUG] Error in getAllProjects:', error);
       throw error;
@@ -149,174 +162,23 @@ export class MemStorage implements IStorage {
     return this.projectTechnologies.delete(id);
   }
 
-  private async initDemoProjects() {
-    // Create ecommerce dashboard project
-    const project1 = await this.createProject({
-      title: "E-commerce Dashboard",
-      description: "A modern dashboard for e-commerce analytics with real-time data visualization.",
-      repoUrl: "https://github.com/brucemaber/ecommerce-dashboard",
-      imageUrl: "/images/ecommerce-dashboard.jpg",  // Updated path
-      stars: 45,
-      forks: 12,
-      views: 156,
-      featured: true
-    });
-    
-    await this.addTechnologyToProject({ 
-      projectId: project1.id, 
-      technology: "React", 
-      category: "frontend" 
-    });
-    await this.addTechnologyToProject({ 
-      projectId: project1.id, 
-      technology: "Node.js", 
-      category: "backend" 
-    });
-    await this.addTechnologyToProject({ 
-      projectId: project1.id, 
-      technology: "GraphQL", 
-      category: "backend" 
-    });
-
-    // Create task manager project
-    const project2 = await this.createProject({
-      title: "Task Manager App",
-      description: "A productivity app for managing tasks with drag-and-drop interface and reminders.",
-      repoUrl: "https://github.com/brucemaber/task-manager",
-      imageUrl: "/images/task-manager.jpg",  // Updated path
-      stars: 32,
-      forks: 8,
-      views: 98,
-      featured: true
-    });
-    
-    await this.addTechnologyToProject({ 
-      projectId: project2.id, 
-      technology: "Next.js", 
-      category: "frontend" 
-    });
-    await this.addTechnologyToProject({ 
-      projectId: project2.id, 
-      technology: "Firebase", 
-      category: "backend" 
-    });
-    await this.addTechnologyToProject({ 
-      projectId: project2.id, 
-      technology: "TypeScript", 
-      category: "language" 
-    });
-
-    // Create weather forecast project
-    const project3 = await this.createProject({
-      title: "Weather Forecast",
-      description: "A beautiful weather forecast application with animated visualizations.",
-      repoUrl: "https://github.com/brucemaber/weather-forecast",
-      imageUrl: "/images/weather-forecast.jpg",  // Updated path
-      stars: 27,
-      forks: 5,
-      views: 84,
-      featured: true
-    });
-    
-    await this.addTechnologyToProject({ 
-      projectId: project3.id, 
-      technology: "React", 
-      category: "frontend" 
-    });
-    await this.addTechnologyToProject({ 
-      projectId: project3.id, 
-      technology: "JavaScript", 
-      category: "language" 
-    });
-    await this.addTechnologyToProject({ 
-      projectId: project3.id, 
-      technology: "SCSS", 
-      category: "styling" 
-    });
-
-    // Create blog platform project
-    const project4 = await this.createProject({
-      title: "Blog Platform",
-      description: "A full-featured blog platform with markdown support, user authentication, and commenting system.",
-      repoUrl: "https://github.com/brucemaber/blog-platform",
-      imageUrl: "/images/blog-platform.jpg",  // Updated path
-      stars: 24,
-      forks: 7,
-      views: 78,
-      featured: false
-    });
-    
-    await this.addTechnologyToProject({ 
-      projectId: project4.id, 
-      technology: "Next.js", 
-      category: "frontend" 
-    });
-    await this.addTechnologyToProject({ 
-      projectId: project4.id, 
-      technology: "Prisma", 
-      category: "database" 
-    });
-    await this.addTechnologyToProject({ 
-      projectId: project4.id, 
-      technology: "TypeScript", 
-      category: "language" 
-    });
-
-    // Create file sharing project
-    const project5 = await this.createProject({
-      title: "File Sharing App",
-      description: "A secure file sharing application with end-to-end encryption and expiring links.",
-      repoUrl: "https://github.com/brucemaber/file-sharing",
-      imageUrl: "/images/file-sharing.jpg",  // Updated path
-      stars: 18,
-      forks: 3,
-      views: 67,
-      featured: false
-    });
-    
-    await this.addTechnologyToProject({ 
-      projectId: project5.id, 
-      technology: "React", 
-      category: "frontend" 
-    });
-    await this.addTechnologyToProject({ 
-      projectId: project5.id, 
-      technology: "Node.js", 
-      category: "backend" 
-    });
-    await this.addTechnologyToProject({ 
-      projectId: project5.id, 
-      technology: "Express", 
-      category: "backend" 
-    });
-
-    // Create recipe app project
-    const project6 = await this.createProject({
-      title: "Recipe App",
-      description: "A recipe discovery and management app with meal planning and shopping list features.",
-      repoUrl: "https://github.com/brucemaber/recipe-app",
-      imageUrl: "/images/recipe-app.jpg",  // Updated path
-      stars: 15,
-      forks: 2,
-      views: 42,
-      featured: false
-    });
-    
-    await this.addTechnologyToProject({ 
-      projectId: project6.id, 
-      technology: "React Native", 
-      category: "mobile" 
-    });
-    await this.addTechnologyToProject({ 
-      projectId: project6.id, 
-      technology: "Redux", 
-      category: "state" 
-    });
-    await this.addTechnologyToProject({ 
-      projectId: project6.id, 
-      technology: "Firebase", 
-      category: "backend" 
-    });
+  private initDemoProjects() {
+    console.log('[DEBUG] Initializing demo projects');
+    // Log your demo project initialization
+    try {
+      // Add a sample project
+      const demoProject = {
+        id: this.currentProjectId++,
+        title: "Test Project",
+        description: "A test project",
+        featured: true,
+        // Add other required fields
+      };
+      this.projects.set(demoProject.id, demoProject);
+      console.log('[DEBUG] Added demo project:', demoProject);
+    } catch (error) {
+      console.error('[DEBUG] Failed to init demo projects:', error);
+    }
   }
 }
 
