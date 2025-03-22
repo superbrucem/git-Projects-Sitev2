@@ -68,13 +68,19 @@ export class MemStorage implements IStorage {
   }
 
   async getAllProjects(): Promise<ProjectWithTechnologies[]> {
-    const projectsArray = Array.from(this.projects.values());
-    return Promise.all(
-      projectsArray.map(async (project) => {
-        const technologies = await this.getTechnologiesForProject(project.id);
-        return { ...project, technologies };
-      })
-    );
+    console.log('[DEBUG] Getting all projects');
+    try {
+      const projectsArray = Array.from(this.projects.values());
+      return Promise.all(
+        projectsArray.map(async (project) => {
+          const technologies = await this.getTechnologiesForProject(project.id);
+          return { ...project, technologies };
+        })
+      );
+    } catch (error) {
+      console.error('[DEBUG] Error in getAllProjects:', error);
+      throw error;
+    }
   }
 
   async getFeaturedProjects(): Promise<ProjectWithTechnologies[]> {
