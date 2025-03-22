@@ -445,12 +445,7 @@ app.use((req, res, next) => {
   } else {
     serveStatic(app);
   }
-  const port = 5e3;
-  server.listen({
-    port,
-    host: "localhost",
-    reusePort: true
-  }, () => {
-    log(`serving on port ${port}`);
+  server.listen(5e3, "127.0.0.1", () => {
+    log(`serving on port 5000`);
   });
 })();
