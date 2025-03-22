@@ -39,6 +39,9 @@ export class MemStorage implements IStorage {
   currentTechnologyId: number;
 
   constructor() {
+    const isProd = process.env.NODE_ENV === 'production';
+    console.log(`[${isProd ? 'PROD' : 'DEV'}] Initializing MemStorage`);
+    
     this.users = new Map();
     this.projects = new Map();
     this.projectTechnologies = new Map();
@@ -46,9 +49,12 @@ export class MemStorage implements IStorage {
     this.currentProjectId = 1;
     this.currentTechnologyId = 1;
     
-    console.log('[DEBUG] MemStorage initialized');
     this.initDemoProjects();
-    console.log('[DEBUG] Demo projects count:', this.projects.size);
+    console.log(`[${isProd ? 'PROD' : 'DEV'}] Storage initialized with:`, {
+      projectsCount: this.projects.size,
+      projectIds: Array.from(this.projects.keys()),
+      timestamp: new Date().toISOString()
+    });
   }
 
   async getUser(id: number): Promise<User | undefined> {

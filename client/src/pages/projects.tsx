@@ -6,8 +6,11 @@ import ProjectFilter from "@/components/project/ProjectFilter";
 import { motion } from "framer-motion";
 
 const Projects = () => {
-  const { data: projects, isLoading } = useQuery<ProjectWithTechnologies[]>({
+  const { data: projects, isLoading, error } = useQuery<ProjectWithTechnologies[]>({
     queryKey: ["/api/projects"],
+    onError: (error) => {
+      console.error("[DEBUG] Projects fetch error:", error);
+    }
   });
 
   const [filteredProjects, setFilteredProjects] = useState<ProjectWithTechnologies[]>([]);
@@ -40,6 +43,12 @@ const Projects = () => {
             ))}
           </div>
         </div>
+      ) : error ? (
+        <div className="text-center py-8">
+          <p className="text-gray-500 dark:text-gray-400">
+            Failed to load projects: {(error as Error).message}
+          </p>
+        </div>
       ) : projects ? (
         <>
           <ProjectFilter 
@@ -59,11 +68,7 @@ const Projects = () => {
             </div>
           )}
         </>
-      ) : (
-        <div className="text-center py-8">
-          <p className="text-gray-500 dark:text-gray-400">Failed to load projects.</p>
-        </div>
-      )}
+      ) : null}
     </motion.section>
   );
 };

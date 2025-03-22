@@ -16,40 +16,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Get all projects
   app.get(`${apiPrefix}/projects`, async (req, res) => {
-    console.log('[DEBUG] Projects endpoint called', {
+    const isProd = process.env.NODE_ENV === 'production';
+    console.log(`[${isProd ? 'PROD' : 'DEV'}] Projects endpoint called`, {
+      env: process.env.NODE_ENV,
       method: req.method,
       url: req.url,
-      headers: req.headers,
       timestamp: new Date().toISOString()
     });
 
     try {
-      console.log('[DEBUG] Calling storage.getAllProjects()');
       const projects = await storage.getAllProjects();
-      
-      console.log('[DEBUG] Projects response:', {
-        count: projects?.length ?? 0,
-        projectIds: projects?.map(p => p.id) ?? [],
-        timestamp: new Date().toISOString()
+      console.log(`[${isProd ? 'PROD' : 'DEV'}] Projects retrieved:`, {
+        count: projects?.length,
+        success: true
       });
-
-      if (!projects || projects.length === 0) {
-        console.log('[DEBUG] No projects found in response');
-        return res.json([]);
-      }
-
       res.json(projects);
     } catch (error) {
-      console.error('[DEBUG] Project fetch error:', {
+      console.error(`[${isProd ? 'PROD' : 'DEV'}] Project fetch error:`, {
         name: error.name,
         message: error.message,
         stack: error.stack,
         timestamp: new Date().toISOString()
       });
       
+      // Send more detailed error in production for debugging
       res.status(500).json({ 
         error: "Failed to fetch projects",
-        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+        details: error.message, // Temporarily enable error details in prod
+        timestamp: new Date().toISOString()
       });
     }
   });
