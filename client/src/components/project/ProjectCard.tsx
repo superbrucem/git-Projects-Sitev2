@@ -1,4 +1,4 @@
-import { ProjectWithTechnologies } from "@shared/schema";
+import { ProjectWithTechnologies, ProjectTechnology } from "@shared/schema";
 
 interface ProjectCardProps {
   project: ProjectWithTechnologies;
@@ -52,7 +52,7 @@ const ProjectCard = ({ project, featured = false }: ProjectCardProps) => {
             {project.description}
           </p>
           <div className="flex flex-wrap gap-2 mb-4">
-            {project.technologies.map((tech) => {
+            {(project.technologies || []).map((tech: ProjectTechnology) => {
               // Map categories to color classes
               const colorClass = 
                 tech.category === "frontend" ? "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300" :
@@ -108,7 +108,7 @@ const ProjectCard = ({ project, featured = false }: ProjectCardProps) => {
           {project.description}
         </p>
         <div className="flex flex-wrap gap-2 mb-4">
-          {project.technologies.map((tech) => {
+          {(project.technologies || []).map((tech: ProjectTechnology) => {
             // Map categories to color classes
             const colorClass = 
               tech.category === "frontend" ? "bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300" :
