@@ -1,5 +1,55 @@
 import { motion } from "framer-motion";
 
+const SKILLS = {
+  frontend: [
+    "React",
+    "Next.js",
+    "TypeScript",
+    "JavaScript",
+    "HTML/CSS",
+    "Tailwind CSS",
+    "Redux"
+  ],
+  backend: [
+    "Node.js",
+    "Express",
+    "MongoDB",
+    "PostgreSQL",
+    "GraphQL",
+    "REST APIs",
+    "Firebase"
+  ],
+  tools: [
+    "Git",
+    "Docker",
+    "AWS",
+    "Vercel",
+    "CI/CD",
+    "Jest",
+    "Figma"
+  ]
+} as const;
+
+const SkillSection = ({ title, skills, colorClass }: { 
+  title: string; 
+  skills: string[];
+  colorClass: string;
+}) => (
+  <div className="mb-8">
+    <h3 className="text-lg font-medium mb-3">{title}</h3>
+    <div className="flex flex-wrap gap-2">
+      {skills.map((skill) => (
+        <span 
+          key={skill}
+          className={`px-3 py-1.5 rounded-full ${colorClass}`}
+        >
+          {skill}
+        </span>
+      ))}
+    </div>
+  </div>
+);
+
 const About = () => {
   return (
     <motion.section 
@@ -37,7 +87,9 @@ const About = () => {
             </div>
             
             <a 
-              href="/resume.pdf" 
+              href="https://docs.google.com/document/d/11hMlzQJy4SEK87YyUfTNGT9mDsH0jGyZ/edit?usp=sharing&ouid=101015884027473602779&rtpof=true&sd=true"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center w-full rounded-md bg-primary text-primary-foreground px-4 py-2.5 text-sm font-medium shadow-sm hover:bg-primary/90 hover:text-black transition-colors"
             >
               <i className="fas fa-download mr-2"></i> Download Resume
@@ -48,101 +100,53 @@ const About = () => {
         <div className="md:col-span-2">
           <div className="prose prose-lg dark:prose-invert max-w-none">
             <p className="text-lg mb-6">
-              Hi there! I'm Bruce Maber, a full-stack developer with 5+ years of experience building web applications. I specialize in React, Next.js, Node.js, and modern JavaScript frameworks.
+              Hi there! I'm Bruce Maber, a developer with 20+ years of experience building web applications and others. 
+              I specialize in Node.js, .net, PHP and modern JavaScript frameworks.
             </p>
             
             <p className="mb-6">
-              My journey in software development began during my computer science studies at University of Technology, where I discovered my passion for creating intuitive and efficient web experiences. Since then, I've worked with startups and established companies to deliver high-quality software solutions.
+            My journey in software development began during my Physics studies at Carleton University, where I discovered my passion for creating intuitive and efficient web experiences. Since then, I've worked with startups, government and established companies to deliver high-quality software solutions.
             </p>
             
             <p className="mb-6">
-              I'm passionate about open source and regularly contribute to various projects. When I'm not coding, you can find me hiking, reading tech blogs, or experimenting with new technologies.
+            I'm passionate about open source, and learning new things. When I'm not coding, you can find me jogging, eskate and reading tech blogs, or experimenting with new technologies.
             </p>
             
             <h2 className="text-2xl font-bold mt-8 mb-4">Skills</h2>
-            
-            <div className="mb-8">
-              <h3 className="text-lg font-medium mb-3">Frontend</h3>
-              <div className="flex flex-wrap gap-2">
-                <span className="px-3 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">React</span>
-                <span className="px-3 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">Next.js</span>
-                <span className="px-3 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">TypeScript</span>
-                <span className="px-3 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">JavaScript</span>
-                <span className="px-3 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">HTML/CSS</span>
-                <span className="px-3 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">Tailwind CSS</span>
-                <span className="px-3 py-1.5 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300">Redux</span>
-              </div>
-            </div>
-            
-            <div className="mb-8">
-              <h3 className="text-lg font-medium mb-3">Backend</h3>
-              <div className="flex flex-wrap gap-2">
-                <span className="px-3 py-1.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">Node.js</span>
-                <span className="px-3 py-1.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">Express</span>
-                <span className="px-3 py-1.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">MongoDB</span>
-                <span className="px-3 py-1.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">PostgreSQL</span>
-                <span className="px-3 py-1.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">GraphQL</span>
-                <span className="px-3 py-1.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">REST APIs</span>
-                <span className="px-3 py-1.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300">Firebase</span>
-              </div>
-            </div>
-            
-            <div className="mb-8">
-              <h3 className="text-lg font-medium mb-3">Tools & Other</h3>
-              <div className="flex flex-wrap gap-2">
-                <span className="px-3 py-1.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300">Git</span>
-                <span className="px-3 py-1.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300">Docker</span>
-                <span className="px-3 py-1.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300">AWS</span>
-                <span className="px-3 py-1.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300">Vercel</span>
-                <span className="px-3 py-1.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300">CI/CD</span>
-                <span className="px-3 py-1.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300">Jest</span>
-                <span className="px-3 py-1.5 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300">Figma</span>
-              </div>
-            </div>
-            
+
+            <SkillSection 
+              title="Frontend" 
+              skills={[...SKILLS.frontend]}
+              colorClass="bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300"
+            />
+
+            <SkillSection 
+              title="Backend" 
+              skills={[...SKILLS.backend]}
+              colorClass="bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300"
+            />
+
+            <SkillSection 
+              title="Tools & Other" 
+              skills={[...SKILLS.tools]}
+              colorClass="bg-purple-100 dark:bg-purple-900/30 text-purple-800 dark:text-purple-300"
+            />
+
             <h2 className="text-2xl font-bold mt-8 mb-4">Experience</h2>
             
             <div className="mb-8">
               <div className="flex justify-between mb-1">
-                <h3 className="text-lg font-medium">Senior Frontend Developer</h3>
-                <span className="text-sm text-gray-600 dark:text-gray-400">2021 - Present</span>
+                <h3 className="text-lg font-medium">For the most current information, please refer to the attached resume.</h3>
               </div>
-              <p className="text-primary mb-2">TechCorp Inc.</p>
-              <p className="text-gray-600 dark:text-gray-400">
-                Leading the frontend development team in building a SaaS platform using React, Next.js, and TypeScript. Implemented CI/CD pipelines and improved performance by 40%.
-              </p>
             </div>
-            
-            <div className="mb-8">
-              <div className="flex justify-between mb-1">
-                <h3 className="text-lg font-medium">Full Stack Developer</h3>
-                <span className="text-sm text-gray-600 dark:text-gray-400">2018 - 2021</span>
-              </div>
-              <p className="text-primary mb-2">StartupX</p>
-              <p className="text-gray-600 dark:text-gray-400">
-                Developed and maintained multiple web applications using React, Node.js, and MongoDB. Collaborated with designers and product managers to deliver features on time.
-              </p>
-            </div>
-            
-            <div className="mb-8">
-              <div className="flex justify-between mb-1">
-                <h3 className="text-lg font-medium">Junior Developer</h3>
-                <span className="text-sm text-gray-600 dark:text-gray-400">2016 - 2018</span>
-              </div>
-              <p className="text-primary mb-2">WebDev Agency</p>
-              <p className="text-gray-600 dark:text-gray-400">
-                Created responsive websites for clients using HTML, CSS, JavaScript, and WordPress. Worked in an agile environment with weekly sprints.
-              </p>
-            </div>
-            
+
             <h2 className="text-2xl font-bold mt-8 mb-4">Education</h2>
             
             <div className="mb-8">
               <div className="flex justify-between mb-1">
-                <h3 className="text-lg font-medium">BSc in Computer Science</h3>
-                <span className="text-sm text-gray-600 dark:text-gray-400">2012 - 2016</span>
+                <h3 className="text-lg font-medium">BSc in Physics</h3>
               </div>
-              <p className="text-primary">University of Technology</p>
+              <p className="text-primary">Carleton University</p>
             </div>
           </div>
         </div>
@@ -152,5 +156,8 @@ const About = () => {
 };
 
 export default About;
+
+
+
 
 
