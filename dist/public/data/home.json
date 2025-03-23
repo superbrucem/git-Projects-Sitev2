@@ -1,0 +1,26 @@
+{
+  "hero": {
+    "name": "Bruce Maber",
+    "title": "Full Stack Developer",
+    "description": "I build modern web applications with a focus on performance, user experience, and clean code. Check out my projects and find out more about my journey in software development."
+  },
+  "featuredProjects": [
+    {
+      "id": 1,
+      "title": "E-commerce Dashboard",
+      "description": "A modern dashboard for e-commerce analytics with real-time data visualization.",
+      "repoUrl": "https://github.com/brucemaber/ecommerce-dashboard",
+      "imageUrl": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97",
+      "stars": 45,
+      "forks": 12,
+      "views": 156,
+      "featured": true,
+      "technologies": [
+        { "id": 1, "projectId": 1, "technology": "React", "category": "frontend" },
+        { "id": 2, "projectId": 1, "technology": "Node.js", "category": "backend" },
+        { "id": 3, "projectId": 1, "technology": "GraphQL", "category": "backend" }
+      ]
+    },
+    // ... rest of your projects
+  ]
+}

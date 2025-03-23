@@ -258,20 +258,30 @@ var MemStorage = class {
 var storage = new MemStorage();
 
 // server/routes.ts
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 async function registerRoutes(app2) {
   const httpServer = createServer(app2);
   app2.use(express.static(path.join(process.cwd(), "public")));
   const apiPrefix = "/api";
   app2.get(`${apiPrefix}/home`, async (_req, res) => {
     try {
-      const filePath = path.join(process.cwd(), "server", "data", "home.json");
+      const __filename3 = fileURLToPath(import.meta.url);
+      const __dirname3 = dirname(__filename3);
+      const filePath = path.join(__dirname3, "data", "home.json");
+      console.log("Current working directory:", process.cwd());
       console.log("Attempting to read file from:", filePath);
+      if (!fs.existsSync(filePath)) {
+        console.error(`File not found at path: ${filePath}`);
+        return res.status(500).json({ message: "Home data file not found" });
+      }
       const homeData = await readFile(filePath, "utf-8");
       const parsedData = JSON.parse(homeData);
       console.log("Successfully loaded home data:", parsedData.featuredProjects?.length, "featured projects found");
       res.json(parsedData);
     } catch (error) {
       console.error("Error fetching home data:", error);
+      console.error("Error details:", error instanceof Error ? error.stack : String(error));
       res.status(500).json({ message: "Failed to fetch home data" });
     }
   });
@@ -311,20 +321,20 @@ async function registerRoutes(app2) {
 
 // server/vite.ts
 import express2 from "express";
-import fs from "fs";
-import path3, { dirname as dirname2 } from "path";
-import { fileURLToPath as fileURLToPath2 } from "url";
+import fs2 from "fs";
+import path3, { dirname as dirname3 } from "path";
+import { fileURLToPath as fileURLToPath3 } from "url";
 import { createServer as createViteServer, createLogger } from "vite";
 
 // vite.config.ts
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import themePlugin from "@replit/vite-plugin-shadcn-theme-json";
-import path2, { dirname } from "path";
+import path2, { dirname as dirname2 } from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
-import { fileURLToPath } from "url";
-var __filename = fileURLToPath(import.meta.url);
-var __dirname = dirname(__filename);
+import { fileURLToPath as fileURLToPath2 } from "url";
+var __filename = fileURLToPath2(import.meta.url);
+var __dirname = dirname2(__filename);
 var vite_config_default = defineConfig({
   plugins: [
     react(),
@@ -351,8 +361,8 @@ var vite_config_default = defineConfig({
 
 // server/vite.ts
 import { nanoid } from "nanoid";
-var __filename2 = fileURLToPath2(import.meta.url);
-var __dirname2 = dirname2(__filename2);
+var __filename2 = fileURLToPath3(import.meta.url);
+var __dirname2 = dirname3(__filename2);
 var viteLogger = createLogger();
 function log(message, source = "express") {
   const formattedTime = (/* @__PURE__ */ new Date()).toLocaleTimeString("en-US", {
@@ -392,7 +402,7 @@ async function setupVite(app2, server) {
         "client",
         "index.html"
       );
-      let template = await fs.promises.readFile(clientTemplate, "utf-8");
+      let template = await fs2.promises.readFile(clientTemplate, "utf-8");
       template = template.replace(
         `src="/src/main.tsx"`,
         `src="/src/main.tsx?v=${nanoid()}"`
@@ -407,7 +417,7 @@ async function setupVite(app2, server) {
 }
 function serveStatic(app2) {
   const distPath = path3.resolve(__dirname2, "public");
-  if (!fs.existsSync(distPath)) {
+  if (!fs2.existsSync(distPath)) {
     throw new Error(
       `Could not find the build directory: ${distPath}, make sure to build the client first`
     );

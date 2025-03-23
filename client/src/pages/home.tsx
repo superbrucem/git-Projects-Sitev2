@@ -15,27 +15,46 @@ interface HomeData {
 }
 
 const Home = () => {
-  const [isLoading, setIsLoading] = useState(true);
   const [homeData, setHomeData] = useState<HomeData | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('/api/home')
-      .then(res => {
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
+    const fetchHomeData = async () => {
+      try {
+        const response = await fetch('/data/home.json');
+        console.log('Home data response status:', response.status);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-        return res.json();
-      })
-      .then(data => {
+        
+        const data = await response.json();
         console.log('Received home data:', data);
+        
+        if (!data.featuredProjects) {
+          throw new Error('No featured projects in response');
+        }
+        
         setHomeData(data);
+      } catch (err) {
+        console.error('Error fetching home data:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load home data');
+      } finally {
         setIsLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching home data:', error);
-        setIsLoading(false);
-      });
+      }
+    };
+
+    fetchHomeData();
   }, []);
+
+  if (error) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-red-500">Error: {error}</p>
+      </div>
+    );
+  }
 
   return (
     <section className="animate-fade-in">
@@ -127,6 +146,8 @@ export default Home;
 
 
  
+
+
 
 
 

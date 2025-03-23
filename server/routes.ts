@@ -4,6 +4,8 @@ import express from "express";
 import path from "path";
 import { readFile } from 'fs/promises';
 import { storage } from "./storage";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Create HTTP server
@@ -18,8 +20,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get home data
   app.get(`${apiPrefix}/home`, async (_req, res) => {
     try {
-      const filePath = path.join(process.cwd(), 'server', 'data', 'home.json');
+      // Get absolute path regardless of where the script is run from
+      const __filename = fileURLToPath(import.meta.url);
+      const __dirname = dirname(__filename);
+      const filePath = path.join(__dirname, 'data', 'home.json');
+      
+      console.log('Current working directory:', process.cwd());
       console.log('Attempting to read file from:', filePath);
+      
+      if (!fs.existsSync(filePath)) {
+        console.error(`File not found at path: ${filePath}`);
+        return res.status(500).json({ message: "Home data file not found" });
+      }
       
       const homeData = await readFile(filePath, 'utf-8');
       const parsedData = JSON.parse(homeData);
@@ -28,6 +40,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(parsedData);
     } catch (error) {
       console.error("Error fetching home data:", error);
+      console.error("Error details:", error instanceof Error ? error.stack : String(error));
       res.status(500).json({ message: "Failed to fetch home data" });
     }
   });
@@ -73,5 +86,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   return httpServer;
 }
+
+
 
 
