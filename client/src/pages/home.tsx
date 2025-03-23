@@ -68,7 +68,7 @@ const Home = () => {
         >
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
             <span className="block">Hi, I'm {homeData?.hero.name}</span>
-            <span className="text-primary block mt-2">{homeData?.hero.title}</span>
+            <span className="text-primary block mt-2 text-2xl md:text-3xl">{homeData?.hero.title}</span>
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
             {homeData?.hero.description}
@@ -146,6 +146,7 @@ export default Home;
 
 
  
+
 
 
 

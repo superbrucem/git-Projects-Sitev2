@@ -11,7 +11,7 @@ const Footer = () => {
               <span className="text-xs text-gray-500 dark:text-gray-400 font-mono">/dev</span>
             </Link>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            Web / Windows Developer
+            Versatile Software Developer: Web, Windows, and Networking
             </p>
           </div>
           <div className="flex flex-wrap gap-4">
@@ -21,10 +21,10 @@ const Footer = () => {
             <a href="https://github.com/superbrucem" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
               <i className="fab fa-github mr-1"></i> GitHub
             </a>
-            <a href="https://twitter.com/brucemaber" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
+            <a href="https://twitter.com/BruceM33976060" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
               <i className="fab fa-twitter mr-1"></i> Twitter
             </a>
-            <a href="https://linkedin.com/in/brucemaber" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
+            <a href="https://www.linkedin.com/in/bruce-maber-40b75445" target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-primary transition-colors">
               <i className="fab fa-linkedin-in mr-1"></i> LinkedIn
             </a>
           </div>
