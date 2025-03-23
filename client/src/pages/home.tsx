@@ -20,8 +20,14 @@ const Home = () => {
 
   useEffect(() => {
     fetch('/api/home')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => {
+        console.log('Received home data:', data);
         setHomeData(data);
         setIsLoading(false);
       })
@@ -121,5 +127,6 @@ export default Home;
 
 
  
+
 
 

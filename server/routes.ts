@@ -18,8 +18,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get home data
   app.get(`${apiPrefix}/home`, async (_req, res) => {
     try {
-      const homeData = await readFile(path.join(process.cwd(), 'server', 'data', 'home.json'), 'utf-8');
-      res.json(JSON.parse(homeData));
+      const filePath = path.join(process.cwd(), 'server', 'data', 'home.json');
+      console.log('Attempting to read file from:', filePath);
+      
+      const homeData = await readFile(filePath, 'utf-8');
+      const parsedData = JSON.parse(homeData);
+      console.log('Successfully loaded home data:', parsedData.featuredProjects?.length, 'featured projects found');
+      
+      res.json(parsedData);
     } catch (error) {
       console.error("Error fetching home data:", error);
       res.status(500).json({ message: "Failed to fetch home data" });
@@ -67,4 +73,5 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   return httpServer;
 }
+
 
