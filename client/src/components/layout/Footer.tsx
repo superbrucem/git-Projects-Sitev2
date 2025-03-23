@@ -11,7 +11,7 @@ const Footer = () => {
               <span className="text-xs text-gray-500 dark:text-gray-400 font-mono">/dev</span>
             </Link>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-              Full Stack Developer building modern web applications
+            Web / Windows Developer
             </p>
           </div>
           <div className="flex flex-wrap gap-4">
