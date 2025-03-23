@@ -156,3 +156,27 @@ export {
   SelectScrollUpButton,
   SelectScrollDownButton,
 }
+
+<select 
+  className="rounded-md border text-black dark:text-white border-gray-300 dark:border-gray-700 px-3 py-2 appearance-none focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-all"
+>
+  <option value="">All Technologies</option>
+  <option value="react">React</option>
+  <option value="node.js">Node.js</option>
+  <option value="graphql">Graphql</option>
+  <option value="next.js">Next.js</option>
+  <option value="firebase">Firebase</option>
+  <option value="typescript">Typescript</option>
+  <option value="vue.js">Vue.js</option>
+  <option value="express">Express</option>
+  <option value="d3.js">D3.js</option>
+</select>
+
+
+
+
+
+
+
+
+
