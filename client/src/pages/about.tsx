@@ -31,7 +31,7 @@ const About = () => {
               <a href="https://linkedin.com/in/brucemaber" target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">
                 <i className="fab fa-linkedin-in"></i>
               </a>
-              <a href="mailto:bruce@example.com" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">
+              <a href="mailto:brucemaber@hotmail.com" className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-primary hover:text-white transition-colors">
                 <i className="fas fa-envelope"></i>
               </a>
             </div>
