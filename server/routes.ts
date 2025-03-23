@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import express from "express";
 import path from "path";
+import { readFile } from 'fs/promises';
 import { storage } from "./storage";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -13,6 +14,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // API route prefix
   const apiPrefix = "/api";
+
+  // Get home data
+  app.get(`${apiPrefix}/home`, async (_req, res) => {
+    try {
+      const homeData = await readFile(path.join(process.cwd(), 'server', 'data', 'home.json'), 'utf-8');
+      res.json(JSON.parse(homeData));
+    } catch (error) {
+      console.error("Error fetching home data:", error);
+      res.status(500).json({ message: "Failed to fetch home data" });
+    }
+  });
 
   // Get all projects
   app.get(`${apiPrefix}/projects`, async (req, res) => {
@@ -55,3 +67,4 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   return httpServer;
 }
+

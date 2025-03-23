@@ -1,14 +1,35 @@
-import { useQuery } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
 import { Link } from "wouter";
 import { ProjectWithTechnologies } from "@shared/schema";
 import ProjectCard from "@/components/project/ProjectCard";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
+interface HomeData {
+  hero: {
+    name: string;
+    title: string;
+    description: string;
+  };
+  featuredProjects: ProjectWithTechnologies[];
+}
+
 const Home = () => {
-  const { data: featuredProjects, isLoading } = useQuery<ProjectWithTechnologies[]>({
-    queryKey: ["/api/projects/featured"],
-  });
+  const [isLoading, setIsLoading] = useState(true);
+  const [homeData, setHomeData] = useState<HomeData | null>(null);
+
+  useEffect(() => {
+    fetch('/api/home')
+      .then(res => res.json())
+      .then(data => {
+        setHomeData(data);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching home data:', error);
+        setIsLoading(false);
+      });
+  }, []);
 
   return (
     <section className="animate-fade-in">
@@ -21,12 +42,11 @@ const Home = () => {
           transition={{ duration: 0.5 }}
         >
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-            <span className="block">Hi, I'm Bruce Maber</span>
-            <span className="text-primary block mt-2">Full Stack Developer</span>
+            <span className="block">Hi, I'm {homeData?.hero.name}</span>
+            <span className="text-primary block mt-2">{homeData?.hero.title}</span>
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-            I build modern web applications with a focus on performance, user experience, and clean code. 
-            Check out my projects and find out more about my journey in software development.
+            {homeData?.hero.description}
           </p>
           <div className="flex flex-wrap gap-3">
             <Button asChild>
@@ -87,7 +107,7 @@ const Home = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredProjects?.map(project => (
+            {homeData?.featuredProjects.map(project => (
               <ProjectCard key={project.id} project={project} featured={true} />
             ))}
           </div>
@@ -98,3 +118,8 @@ const Home = () => {
 };
 
 export default Home;
+
+
+ 
+
+

@@ -5,6 +5,7 @@ import express3 from "express";
 import { createServer } from "http";
 import express from "express";
 import path from "path";
+import { readFile } from "fs/promises";
 
 // server/storage.ts
 var MemStorage = class {
@@ -261,6 +262,15 @@ async function registerRoutes(app2) {
   const httpServer = createServer(app2);
   app2.use(express.static(path.join(process.cwd(), "public")));
   const apiPrefix = "/api";
+  app2.get(`${apiPrefix}/home`, async (_req, res) => {
+    try {
+      const homeData = await readFile(path.join(process.cwd(), "server", "data", "home.json"), "utf-8");
+      res.json(JSON.parse(homeData));
+    } catch (error) {
+      console.error("Error fetching home data:", error);
+      res.status(500).json({ message: "Failed to fetch home data" });
+    }
+  });
   app2.get(`${apiPrefix}/projects`, async (req, res) => {
     try {
       const projects = await storage.getAllProjects();
